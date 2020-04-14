@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 实体类和数据库表映射配置 -->
+<mapper namespace="com.hpe.dao.TrainDao">
+    
+    <!-- 删除 -->
+    <delete id="delTrainInfo" parameterType="java.lang.String">
+        delete from train_info where train_no in
+		<foreach collection="array" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+    </delete>
+    
+    <select id="getAllTrain" resultType="com.hpe.po.TrainInfo">
+        select train_no,start_station,arrival_station,start_time,arrival_time,type,runtime
+        from train_info order by train_no
+    </select>
+    
+    <select id="findTrain" resultType="com.hpe.po.TrainInfo" parameterType="string">
+    	select train_no,start_station,arrival_station,start_time,arrival_time,type,runtime,mile
+        from train_info where train_no=#{0}
+    </select>
+    
+    
+    
+    
+    
+    <!-- 分页 -->
+    <select id="getPageList" parameterType="com.hpe.util.Page" resultType="com.hpe.po.TrainInfo">
+    	select train_no,start_station,arrival_station,start_time,arrival_time,type,runtime,mile
+        from train_info order by train_no
+    </select>
+    
+    
+</mapper>
+
+
+
